@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#030407">
+<title>Pixel Saga - Exploração em Mercúrio</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="visor"></div>
+<div id="heatTint"></div>
+<div id="lowO2"></div>
+
+<div id="journal" class="overlay" hidden>
+ <div class="box panel">
+  <div class="brand">DIÁRIO CIENTÍFICO <span class="kbOnly">• TECLA J PARA FECHAR</span></div>
+  <h2 style="margin-top:10px">CODEX DE MERCÚRIO</h2>
+  <p class="sciFacts">Mercúrio completa 3 rotações a cada 2 órbitas (ressonância 3:2). Por isso um dia solar dura 176 dias terrestres, o dobro do ano de 88 dias. Perto do periélio o Sol chega a parar e recuar no céu, o que gera o duplo amanhecer simulado aqui.</p>
+  <div class="achRow" id="achList"></div>
+  <div id="journalList"></div>
+  <div class="menuList"><button class="menuBtn" id="btnJournalClose">FECHAR DIÁRIO</button></div>
+ </div>
+</div>
+
+<div id="endScreen" class="overlay" hidden>
+ <div class="box panel" style="max-width:560px">
+  <div class="brand">MISSÃO MERCURY-01</div>
+  <h1 style="margin:8px 0">MISSÃO CONCLUÍDA</h1>
+  <p class="small">Todas as estruturas foram analisadas e os dados enviados à Terra. Você honrou o legado da Mariner 10, da MESSENGER e da BepiColombo.</p>
+  <div id="endStats"></div>
+  <div class="menuList"><button class="menuBtn primary" id="btnEndContinue">CONTINUAR EXPLORANDO</button></div>
+ </div>
+</div>
+
+<div id="start">
+ <div id="menuWrap">
+  <div class="brand">ORBITAL RESEARCH DIVISION</div>
+  <h1 id="menuTitle">PIXEL<br>SAGA</h1>
+  <div class="brand" id="menuSubtitle">EXPLORAÇÃO EM MERCÚRIO</div>
+  <p id="menuSub">
+   Você está na superfície de Mercúrio. Explore um mundo de extremos,
+   investigue crateras de impacto, escarpas e vales profundos e use seu
+   scanner para registrar descobertas científicas.
+  </p>
+
+  <div id="screenMain" class="menuList">
+   <button class="menuBtn primary" id="btnPlay">INICIAR EXPLORAÇÃO</button>
+   <button class="menuBtn" id="btnControls">CONTROLES</button>
+   <button class="menuBtn" id="btnOptions">OPÇÕES</button>
+   <button class="menuBtn" id="btnQuit" hidden>ENCERRAR MISSÃO</button>
+  </div>
+
+  <div id="screenControls" class="subScreen" hidden>
+   <h2>CONTROLES</h2>
+   <div class="keyRow kbOnly"><span>Movimentar</span><kbd>W A S D</kbd></div>
+   <div class="keyRow kbOnly"><span>Olhar ao redor</span><kbd>MOUSE</kbd></div>
+   <div class="keyRow kbOnly"><span>Correr</span><kbd>SHIFT</kbd></div>
+   <div class="keyRow kbOnly"><span>Saltar</span><kbd>ESPAÇO</kbd></div>
+   <div class="keyRow kbOnly"><span>Entrar e sair do jipe</span><kbd>E</kbd></div>
+   <div class="keyRow kbOnly"><span>Analisar descoberta (segurar 2 s)</span><kbd>E (SEGURAR)</kbd></div>
+   <div class="keyRow kbOnly"><span>Diário científico</span><kbd>J</kbd></div>
+   <div class="keyRow kbOnly"><span>Faróis do jipe</span><kbd>L</kbd></div>
+   <div class="keyRow kbOnly"><span>Pausar / menu</span><kbd>ESC</kbd></div>
+
+   <div class="keyRow touchOnly"><span>Andar / dirigir o jipe</span><kbd>ANALÓGICO ESQ.</kbd></div>
+   <div class="keyRow touchOnly"><span>Correr</span><kbd>EMPURRE ATÉ A BORDA</kbd></div>
+   <div class="keyRow touchOnly"><span>Olhar ao redor</span><kbd>ARRASTAR A TELA</kbd></div>
+   <div class="keyRow touchOnly"><span>Saltar</span><kbd>SALTO</kbd></div>
+   <div class="keyRow touchOnly"><span>Entrar / sair do jipe</span><kbd>AÇÃO</kbd></div>
+   <div class="keyRow touchOnly"><span>Analisar descoberta (segurar 2 s)</span><kbd>AÇÃO (SEGURAR)</kbd></div>
+   <div class="keyRow touchOnly"><span>Faróis do jipe</span><kbd>LUZ</kbd></div>
+   <div class="keyRow touchOnly"><span>Diário científico</span><kbd>📖</kbd></div>
+   <div class="keyRow touchOnly"><span>Pausar / menu</span><kbd>❚❚</kbd></div>
+
+   <div class="keyRow"><span>Recarregar: aproxime-se de uma estação</span><kbd>AUTOMÁTICO</kbd></div>
+   <div class="menuList"><button class="menuBtn" data-back>‹ VOLTAR</button></div>
+  </div>
+
+  <div id="screenOptions" class="subScreen" hidden>
+   <h2>OPÇÕES</h2>
+   <div class="optRow">
+    <label for="optSens">Sensibilidade do mouse <b id="optSensVal">5</b></label>
+    <input id="optSens" type="range" min="1" max="10" step="1" value="5">
+   </div>
+   <div class="optRow">
+    <label for="optFov">Campo de visão <b id="optFovVal">76°</b></label>
+    <input id="optFov" type="range" min="60" max="100" step="1" value="76">
+   </div>
+   <div class="optRow">
+    <label for="optVol">Volume <b id="optVolVal">60%</b></label>
+    <input id="optVol" type="range" min="0" max="100" step="5" value="60">
+   </div>
+   <div class="optRow">
+    <label for="optExp">Brilho <b id="optExpVal">100%</b></label>
+    <input id="optExp" type="range" min="60" max="160" step="5" value="100">
+   </div>
+   <div class="menuList"><button class="menuBtn" data-back>‹ VOLTAR</button></div>
+  </div>
+
+  <div class="small">SIMULAÇÃO 3D • MISSÃO MERCURY-01</div>
+ </div>
+</div>
+<div id="hud">
+ <div id="mission" class="panel">
+  <div class="brand">MISSÃO MERCURY-01</div>
+  <h1>Exploração planetária</h1>
+  <div class="small">LOCALIZAÇÃO: HEMISFÉRIO ILUMINADO</div>
+  <div class="stat keepT"><span>Temperatura local</span><b id="tempInfo">--</b></div>
+  <div class="stat"><span>Gravidade relativa</span><b>0,38 g</b></div>
+  <div class="stat"><span>Atmosfera</span><b>Exosfera tênue</b></div>
+  <div class="stat"><span>Sol (elevação)</span><b id="sunInfo">--</b></div>
+  <div class="stat"><span>Dia solar (176 d)</span><b id="solarDay">--</b></div>
+  <div class="stat"><span>Ano (88 d)</span><b id="yearDay">--</b></div>
+  <div class="stat"><span>Tempo de missão</span><b id="missionTime">00:00</b></div>
+  <div class="stat"><span>Distância percorrida</span><b id="distance">0 m</b></div>
+  <div class="stat keepT" id="speedStat" hidden><span>Velocidade do jipe</span><b id="jeepSpeedTxt">0 km/h</b></div>
+  <div class="stat keepT"><span>Descobertas</span><b id="discoveries">0 / 12</b></div>
+ </div>
+
+ <div id="objective" class="panel">
+  <h2>OBJETIVO DA MISSÃO</h2>
+  <p id="objectiveText">
+   Explore a região e localize estruturas geológicas.
+   Aproxime-se de uma descoberta e segure E por 2 s para analisá-la. J abre o diário.
+  </p>
+  <div class="small">SCANNER CIENTÍFICO <b style="color:#eab47e">● ATIVO</b></div>
+ </div>
+
+ <div id="compass"><canvas id="compassCv" width="920" height="68"></canvas></div>
+ <div id="toast" class="panel"></div>
+
+ <div id="vitals" class="panel">
+  <div class="brand">SISTEMAS DO TRAJE</div>
+  <div class="bar"><div><span>OXIGÊNIO</span><b id="o2Txt">100%</b></div><i><span id="o2Bar"></span></i></div>
+  <div class="bar"><div><span id="batLabel">BATERIA DO JIPE</span><b id="batTxt">100%</b></div><i><span id="batBar"></span></i></div>
+  <div class="bar"><div><span>CARGA TÉRMICA</span><b id="heatTxt">0%</b></div><i><span id="heatBar"></span></i></div>
+  <div id="heatWarn" hidden></div>
+ </div>
+ <div id="minimap"><canvas id="minimapCv" width="300" height="300"></canvas></div>
+
+ <div id="crosshair"></div>
+ <div id="scanBarWrap" hidden><div id="scanBar"></div></div>
+ <div id="reticleLabel"></div>
+ <div id="bottom">
+  <div id="message">Aguardando início da missão...</div>
+  <div class="small">MERCÚRIO • PRIMEIRO PLANETA DO SISTEMA SOLAR</div>
+ </div>
+ <div id="scan"></div>
+
+ <div id="touchUI">
+  <div id="moveZone"></div>
+  <div id="joyBase"><div id="joyKnob"></div></div>
+  <button type="button" class="tBtn" id="tPause" aria-label="Pausar">❚❚</button>
+  <button type="button" class="tBtn" id="tJournal" aria-label="Diário científico">📖</button>
+  <button type="button" class="tBtn" id="tLight">LUZ</button>
+  <button type="button" class="tBtn" id="tJump">SALTO</button>
+  <button type="button" class="tBtn" id="tAct">AÇÃO</button>
+ </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
